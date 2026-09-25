@@ -9,7 +9,7 @@ import java.util.List;
 import static config.DataBase.getConnection;
 
 
-public class ProductDao {
+public final class ProductDao {
     public static final String QUERY_ADD_NEW_PRODUCT = "INSERT INTO product (name, quantity, price) VALUES (?, ?, ?)";
 
     public static final String QUERY_DELETE_PRODUCT = "DELETE FROM product WHERE id = ?";
@@ -21,7 +21,6 @@ public class ProductDao {
     public static final String QUERY_CLEAR_TABLE = "TRUNCATE TABLE product RESTART IDENTITY";
 
     public static final String QUERY_FIND_LOW_STOCK = "SELECT * FROM product WHERE quantity <= ?";
-
 
     public static final String QUERY_FIND_BY_NAME = "SELECT * FROM product WHERE LOWER(name) LIKE LOWER(?)";
 
@@ -83,10 +82,10 @@ public class ProductDao {
         }
     }
 
-    public static void updateQuantity(int quantity, int id){
+    public static void updateQuantity(int id, int quantity){
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(QUERY_UPDATE_QUANTITY_PRODUCT)){
-            stmt.setInt(1, quantity);
-            stmt.setInt(2, id);
+            stmt.setInt(1, id);
+            stmt.setInt(2, quantity);
             stmt.executeUpdate();
             System.out.println("Successful update quantity product");
         } catch (SQLException e){
@@ -94,7 +93,7 @@ public class ProductDao {
         }
     }
 
-    public static void updatePrice(int price, int id){
+    public static void updatePrice(int id, double price){
         try(Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(QUERY_UPDATE_PRICE)){
             stmt.setDouble(1, price);
             stmt.setInt(2, id);
