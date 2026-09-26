@@ -14,7 +14,7 @@ public final class ProductDao {
 
     public static final String QUERY_DELETE_PRODUCT = "DELETE FROM product WHERE id = ?";
 
-    public static final String QUERY_GET_ALL = "SELECT * FROM product";
+    public static final String QUERY_GET_ALL = "SELECT * FROM product ORDER BY id ASC";
 
     public static final String QUERY_GET_FROM_ID = "SELECT * FROM product WHERE id = ?";
 
@@ -23,8 +23,6 @@ public final class ProductDao {
     public static final String QUERY_FIND_LOW_STOCK = "SELECT * FROM product WHERE quantity <= ?";
 
     public static final String QUERY_FIND_BY_NAME = "SELECT * FROM product WHERE LOWER(name) LIKE LOWER(?)";
-
-    public static final String QUERY_FIND_OUT_OF_STOCK = "SELECT * FROM product WHERE quantity = 0";
 
     public static final String QUERY_UPDATE_PRODUCT = "UPDATE product SET name = ?, quantity = ?, price = ? WHERE id = ?";
 
@@ -84,8 +82,8 @@ public final class ProductDao {
 
     public static void updateQuantity(int id, int quantity){
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(QUERY_UPDATE_QUANTITY_PRODUCT)){
-            stmt.setInt(1, id);
-            stmt.setInt(2, quantity);
+            stmt.setInt(1, quantity);
+            stmt.setInt(2, id);
             stmt.executeUpdate();
             System.out.println("Successful update quantity product");
         } catch (SQLException e){
@@ -185,15 +183,6 @@ public final class ProductDao {
         }
     }
 
-    public static List<Product> findOutOfStock(){
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(QUERY_FIND_OUT_OF_STOCK); ResultSet rs = stmt.executeQuery()){
-            return fromRsToProduct(rs);
-        } catch (SQLException e){
-            System.out.println("Error: " + e);
-            return null;
-        }
-    }
-
     public static void clearTable(){
         try(Connection conn = getConnection(); Statement stmt = conn.createStatement()){
             stmt.execute(QUERY_CLEAR_TABLE);
@@ -201,6 +190,4 @@ public final class ProductDao {
             System.out.println("Error: " + e);
         }
     }
-
-
 }

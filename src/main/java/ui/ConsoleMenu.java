@@ -50,32 +50,29 @@ public class ConsoleMenu {
                     """);
             String choice = sc.nextLine().trim();
             switch (choice) {
-                case "1":
+                case "1" -> {
                     List<Product> products = service.getAllProducts();
                     System.out.println(products);
-                    break;
-                case "2":
+                }
+                case "2" -> {
                     System.out.println("Enter product ID: ");
                     int id = Integer.parseInt(sc.nextLine().trim());
                     System.out.println(service.getProductById(id));
-                    break;
-                case "3":
+                }
+                case "3" -> {
                     System.out.println("Enter product name: ");
                     String name = sc.nextLine().trim();
                     System.out.println(service.searchByName(name));
-                    break;
-                case "4":
+                }
+                case "4" -> {
                     System.out.println("Enter field (name, price, quantity): ");
                     String field = sc.nextLine().trim();
                     System.out.println("Ascending? (true/false): ");
                     boolean asc = Boolean.parseBoolean(sc.nextLine().trim());
                     System.out.println(service.getSortedProducts(field, asc));
-                    break;
-                case "5":
-                    back = true;
-                    break;
-                default:
-                    System.out.println("Invalid input!");
+                }
+                case "5" -> back = true;
+                default -> System.out.println("Invalid input!");
             }
         }
     }
@@ -93,7 +90,7 @@ public class ConsoleMenu {
                     """);
             String choice = sc.nextLine().trim();
             switch (choice) {
-                case "1":
+                case "1" -> {
                     System.out.println("Enter product name: ");
                     String name = sc.nextLine().trim();
                     System.out.println("Enter quantity: ");
@@ -102,45 +99,42 @@ public class ConsoleMenu {
                     double price = Double.parseDouble(sc.nextLine().trim());
                     service.createProduct(name, quantity, price);
                     System.out.println("Product has been added successfully!");
-                    break;
-                case "2":
+                }
+                case "2" -> {
                     System.out.println("Enter product ID: ");
-                    int Id = Integer.parseInt(sc.nextLine().trim());
+                    int id = Integer.parseInt(sc.nextLine().trim());
                     System.out.println("Enter new name: ");
                     String newName = sc.nextLine().trim();
                     System.out.println("Enter new quantity: ");
                     int newQuantity = Integer.parseInt(sc.nextLine().trim());
                     System.out.println("Enter new price: ");
                     double newPrice = Double.parseDouble(sc.nextLine().trim());
-                    service.updateProduct(Id, newName, newQuantity, newPrice);
+                    service.updateProduct(id, newName, newQuantity, newPrice);
                     System.out.println("Product updated successfully!");
-                    break;
-                case "3":
+                }
+                case "3" -> {
                     System.out.println("Enter product ID: ");
                     int deleteId = Integer.parseInt(sc.nextLine().trim());
                     service.deleteProduct(deleteId);
                     System.out.println("Product deleted successfully!");
-                    break;
-                case "4":
+                }
+                case "4" -> {
                     System.out.println("Enter product ID: ");
                     int priceId = Integer.parseInt(sc.nextLine().trim());
                     System.out.println("Enter new price: ");
                     double priceVal = Double.parseDouble(sc.nextLine().trim());
                     service.changePrice(priceId, priceVal);
                     System.out.println("Price updated successfully!");
-                    break;
-                case "5":
+                }
+                case "5" -> {
                     System.out.println("You sure to delete all Products? Write 'sure'");
                     if (sc.nextLine().trim().equalsIgnoreCase("sure")) {
                         service.clearAllInventory();
                         System.out.println("All inventory cleared!");
                     }
-                    break;
-                case "6":
-                    back = true;
-                    break;
-                default:
-                    System.out.println("Invalid input!");
+                }
+                case "6" -> back = true;
+                default -> System.out.println("Invalid input!");
             }
         }
     }
@@ -155,27 +149,24 @@ public class ConsoleMenu {
                     """);
             String choice = sc.nextLine().trim();
             switch (choice) {
-                case "1":
+                case "1" -> {
                     System.out.println("Enter product ID: ");
                     int id = Integer.parseInt(sc.nextLine().trim());
                     System.out.println("Enter amount: ");
                     int amount = Integer.parseInt(sc.nextLine().trim());
                     service.replenishStock(id, amount);
                     System.out.println("Stock replenished successfully!");
-                    break;
-                case "2":
+                }
+                case "2" -> {
                     System.out.println("Enter product ID: ");
                     int writeOffId = Integer.parseInt(sc.nextLine().trim());
                     System.out.println("Enter amount: ");
                     int writeOffAmount = Integer.parseInt(sc.nextLine().trim());
                     service.writeOffStock(writeOffId, writeOffAmount);
                     System.out.println("Stock written off successfully!");
-                    break;
-                case "3":
-                    back = true;
-                    break;
-                default:
-                    System.out.println("Invalid input!");
+                }
+                case "3" -> back = true;
+                default -> System.out.println("Invalid input!");
             }
         }
     }
@@ -186,23 +177,20 @@ public class ConsoleMenu {
             System.out.println("""
                     1. Get low stock Products
                     2. Calculate price warehouse
-                    3. Main menu
+                    3. Get out stock
+                    4. Main menu
                     """);
             String choice = sc.nextLine().trim();
             switch (choice) {
-                case "1":
+                case "1" -> {
                     System.out.println("Enter threshold quantity: ");
                     int threshold = Integer.parseInt(sc.nextLine().trim());
                     System.out.println(service.getLowStockAlerts(threshold));
-                    break;
-                case "2":
-                    System.out.println("Price WareHouse: " + service.calculateWarehouseValue());
-                    break;
-                case "3":
-                    back = true;
-                    break;
-                default:
-                    System.out.println("Invalid input!");
+                }
+                case "2" -> System.out.println("Price WareHouse: " + service.calculateWarehouseValue());
+                case "3" -> service.getLowStockAlerts(0);
+                case "4" -> back = true;
+                default -> System.out.println("Invalid input!");
             }
         }
     }

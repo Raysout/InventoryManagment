@@ -77,7 +77,7 @@ public class InventoryServiceImpl implements InventoryService {
                     + product.getQuantity() + ", requested: " + amount);
         }
 
-        ProductDao.updateQuantity(product.getQuantity() - amount, id);
+        ProductDao.updateQuantity(id, product.getQuantity() - amount);
     }
 
     @Override
